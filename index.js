@@ -98,6 +98,42 @@ app.post("/messes", (req, res) => {
 
 });
 
+// Update Existing Mess
+app.put("/messes/:id", (req, res) => {
+
+    // Get mess ID from URL
+    const messId = parseInt(req.params.id);
+
+    // Find mess by ID
+    const mess = messes.find((m) => m.id === messId);
+
+    // Check if mess exists
+    if (!mess) {
+
+        return res.status(404).json({
+            message: "Mess not found"
+        });
+
+    }
+
+    // Get updated data from request body
+    const { name, location, price } = req.body;
+
+    // Update only provided fields
+    if (name) mess.name = name;
+
+    if (location) mess.location = location;
+
+    if (price) mess.price = price;
+
+    // Send success response
+    res.json({
+        message: "Mess updated successfully",
+        mess
+    });
+
+});
+
 // Handle Unknown Routes
 app.use((req, res) => {
     res.status(404).json({
