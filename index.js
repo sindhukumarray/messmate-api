@@ -67,20 +67,50 @@ app.get("/health", (req, res) => {
     });
 });
 
+// Get Messes By Location
+app.get("/messes/location/:loc", (req, res) => {
+
+    const location = req.params.loc;
+
+    const filteredMesses = messes.filter(
+        (m) => m.location.toLowerCase() === location.toLowerCase()
+    );
+
+    if (filteredMesses.length === 0) {
+
+        return res.status(404).json({
+            message: "No messes found"
+        });
+
+    }
+
+    res.json(filteredMesses);
+
+});
+
 // Create New Mess
 app.post("/messes", (req, res) => {
 
     // Get data from request body
     const { name, location, price } = req.body;
 
-    // Validate required fields
-    if (!name || !location || !price) {
+   // Validate required fields
+if (!name || !location || price === undefined) {
 
-        return res.status(400).json({
-            message: "Missing required fields"
-        });
+    return res.status(400).json({
+        message: "Missing required fields"
+    });
 
-    }
+}
+
+// Validate price
+if (typeof price !== "number") {
+
+    return res.status(400).json({
+        message: "Price must be a number"
+    });
+
+}
 
     // Create new mess object
     const newMess = {
