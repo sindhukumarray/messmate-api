@@ -67,11 +67,35 @@ app.get("/health", (req, res) => {
     });
 });
 
-// Mock Create Mess Route
+// Create New Mess
 app.post("/messes", (req, res) => {
-    res.status(201).json({
-        message: "Mess created (mock)"
-    });
+
+    // Get data from request body
+    const { name, location, price } = req.body;
+
+    // Validate required fields
+    if (!name || !location || !price) {
+
+        return res.status(400).json({
+            message: "Missing required fields"
+        });
+
+    }
+
+    // Create new mess object
+    const newMess = {
+        id: messes.length + 1,
+        name,
+        location,
+        price
+    };
+
+    // Add new mess to array
+    messes.push(newMess);
+
+    // Send response
+    res.status(201).json(newMess);
+
 });
 
 // Handle Unknown Routes
