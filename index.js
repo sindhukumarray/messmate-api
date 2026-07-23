@@ -4,11 +4,14 @@ const express = require("express");
 // Create an Express application
 const app = express();
 
+//# Middleware to parse JSON request body
+app.use(express.json());
+
 // Define the port number
 const PORT = process.env.PORT || 3000;
 
 // Sample Mess Data
-const messes = [
+let messes = [
     {
         id: 1,
         name: "Sai Krupa Mess",
