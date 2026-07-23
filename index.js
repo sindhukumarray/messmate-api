@@ -57,6 +57,26 @@ app.get("/messes/:id", (req, res) => {
 
 });
 
+// Health Check Route
+app.get("/health", (req, res) => {
+    res.status(200).json({
+        status: "ok"
+    });
+});
+
+// Mock Create Mess Route
+app.post("/messes", (req, res) => {
+    res.status(201).json({
+        message: "Mess created (mock)"
+    });
+});
+
+// Handle Unknown Routes
+app.use((req, res) => {
+    res.status(404).json({
+        message: "Route not found"
+    });
+});
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
