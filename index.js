@@ -134,6 +134,35 @@ app.put("/messes/:id", (req, res) => {
 
 });
 
+// Delete Existing Mess
+app.delete("/messes/:id", (req, res) => {
+
+    // Get mess ID from URL
+    const messId = parseInt(req.params.id);
+
+    // Find index of mess
+    const index = messes.findIndex((m) => m.id === messId);
+
+    // Check if mess exists
+    if (index === -1) {
+
+        return res.status(404).json({
+            message: "Mess not found"
+        });
+
+    }
+
+    // Delete mess from array
+    const deleted = messes.splice(index, 1);
+
+    // Send response
+    res.json({
+        message: "Mess deleted successfully",
+        deleted
+    });
+
+});
+
 // Handle Unknown Routes
 app.use((req, res) => {
     res.status(404).json({
