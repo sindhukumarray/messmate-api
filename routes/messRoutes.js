@@ -55,4 +55,31 @@ router.post("/", async (req, res) => {
 
 });
 
+// GET single mess by ID
+router.get("/:id", async (req, res) => {
+
+    try {
+
+        const mess = await Mess.findById(req.params.id);
+
+        if (!mess) {
+
+            return res.status(404).json({
+                message: "Mess not found"
+            });
+
+        }
+
+        res.json(mess);
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: "Invalid ID or server error"
+        });
+
+    }
+
+});
+
 module.exports = router; //routes ko export kar deya 
