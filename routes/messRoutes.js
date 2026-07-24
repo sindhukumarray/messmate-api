@@ -82,4 +82,49 @@ router.get("/:id", async (req, res) => {
 
 });
 
+// PUT update a mess
+router.put("/:id", async (req, res) => {
+
+    try {
+
+        const mess = await Mess.findByIdAndUpdate(
+
+            req.params.id,
+
+            req.body,
+
+            {
+
+                new: true,
+
+                runValidators: true
+
+            }
+
+        );
+
+        if (!mess) {
+
+            return res.status(404).json({
+
+                message: "Mess not found"
+
+            });
+
+        }
+
+        res.json(mess);
+
+    } catch (err) {
+
+        res.status(400).json({
+
+            message: "Invalid input or ID"
+
+        });
+
+    }
+
+});
+
 module.exports = router; //routes ko export kar deya 
