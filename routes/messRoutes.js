@@ -127,4 +127,39 @@ router.put("/:id", async (req, res) => {
 
 });
 
+// DELETE a mess
+router.delete("/:id", async (req, res) => {
+
+    try {
+
+        const mess = await Mess.findByIdAndDelete(req.params.id);
+
+        if (!mess) {
+
+            return res.status(404).json({
+
+                message: "Mess not found"
+
+            });
+
+        }
+
+        res.json({
+
+            message: "Mess deleted successfully"
+
+        });
+
+    } catch (err) {
+
+        res.status(400).json({
+
+            message: "Invalid ID"
+
+        });
+
+    }
+
+});
+
 module.exports = router; //routes ko export kar deya 
