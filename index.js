@@ -7,17 +7,22 @@ const express = require("express");
 //import mongo library 
 const mongoose = require("mongoose");
 
+//onliye for cheking then delete import
+const Mess = require("./models/Mess");
+
+// conect messall routes
+const messRoutes = require("./routes/messRoutes");
+
 // Create an Express application
 const app = express();
 
 //# Middleware to parse JSON request body
 app.use(express.json());
+app.use("/messes", messRoutes);
 
 // Define the port number
 const PORT = process.env.PORT || 3000;
 
-//onliye for cheking then delete import
-const Mess = require("./models/Mess");
 // //testing perpouse
 app.get("/test-add", async (req, res) => {
 
