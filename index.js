@@ -1,4 +1,4 @@
-//.env ko load kro 
+// //.env ko load kro 
 require("dotenv").config();
 
 // Import Express framework
@@ -16,6 +16,37 @@ app.use(express.json());
 // Define the port number
 const PORT = process.env.PORT || 3000;
 
+//onliye for cheking then delete import
+const Mess = require("./models/Mess");
+// //testing perpouse
+app.get("/test-add", async (req, res) => {
+
+    try {
+
+        const newMess = new Mess({
+
+            name: "Test Mess",
+            location: "Baner",
+            price: 3200
+
+        });
+
+        const saved = await newMess.save();
+
+        console.log(saved);
+
+        res.json(saved);
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json(err);
+
+    }
+
+});
+
 // mongoosedb connection
 mongoose.connect(process.env.MONGO_URI)
 
@@ -23,9 +54,9 @@ mongoose.connect(process.env.MONGO_URI)
 
     console.log("Connected to MongoDB");
 
-    app.listen(process.env.PORT, () => {
+    app.listen(PORT, () => {
 
-        console.log(`Server running at http://localhost:${process.env.PORT}`);
+        console.log(`Server running at http://localhost:${PORT}`);
 
     });
 
@@ -36,6 +67,8 @@ mongoose.connect(process.env.MONGO_URI)
     console.error("Failed to connect to MongoDB:", err.message);
 
 });
+
+
 
 // Sample Mess Data
 let messes = [
@@ -227,6 +260,6 @@ app.use((req, res) => {
     });
 });
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server is running at http://localhost:${PORT}`);
+// });
