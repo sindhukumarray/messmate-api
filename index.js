@@ -1,5 +1,11 @@
+//.env ko load kro 
+require("dotenv").config();
+
 // Import Express framework
 const express = require("express");
+
+//import mongo library 
+const mongoose = require("mongoose");
 
 // Create an Express application
 const app = express();
@@ -9,6 +15,27 @@ app.use(express.json());
 
 // Define the port number
 const PORT = process.env.PORT || 3000;
+
+// mongoosedb connection
+mongoose.connect(process.env.MONGO_URI)
+
+.then(() => {
+
+    console.log("Connected to MongoDB");
+
+    app.listen(process.env.PORT, () => {
+
+        console.log(`Server running at http://localhost:${process.env.PORT}`);
+
+    });
+
+})
+
+.catch((err) => {
+
+    console.error("Failed to connect to MongoDB:", err.message);
+
+});
 
 // Sample Mess Data
 let messes = [
